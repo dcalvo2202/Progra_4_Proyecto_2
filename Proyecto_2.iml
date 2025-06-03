@@ -4,5 +4,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="io.jsonwebtoken.jjwt.api1" level="project" />
+    <orderEntry type="library" name="io.jsonwebtoken.jjwt.impl1" level="project" />
+    <orderEntry type="library" name="io.jsonwebtoken.jjwt.jackson1" level="project" />
   </component>
 </module>

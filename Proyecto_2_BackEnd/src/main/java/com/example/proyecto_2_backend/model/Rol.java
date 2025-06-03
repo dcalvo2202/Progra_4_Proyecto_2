@@ -3,6 +3,7 @@ package com.example.proyecto_2_backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 @Entity
+
 @Table(name = "rol")
 public class Rol {
     @Setter
