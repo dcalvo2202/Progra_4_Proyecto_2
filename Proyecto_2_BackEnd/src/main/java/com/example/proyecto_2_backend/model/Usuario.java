@@ -1,6 +1,9 @@
 package com.example.proyecto_2_backend.model;
 
 import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -38,8 +41,8 @@ public class Usuario {
         this.clave = clave;
     }
 
-    public Rol getRol() {
-        return rol;
+    public List<Rol> getRol() {
+        return List.of(rol);
     }
 
     public void setRol(Rol rol) {

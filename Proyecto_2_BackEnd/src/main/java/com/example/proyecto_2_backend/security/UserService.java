@@ -4,12 +4,12 @@ import com.example.proyecto_2_backend.model.Usuario;
 import com.example.proyecto_2_backend.model.Rol;
 import com.example.proyecto_2_backend.repository.RolRepository;
 import com.example.proyecto_2_backend.repository.UsuarioRepository;
-// import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-
+@RequiredArgsConstructor
 public class UserService {
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
@@ -26,7 +26,7 @@ public class UserService {
         Usuario usuario = new Usuario();
         usuario.setId(id);
         usuario.setClave(passwordEncoder.encode(password));
-        // usuario.setRoles(List.of(rol));
+        usuario.setRol(rol);
 
         return usuarioRepository.save(usuario);
     }

@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioService {
     @Autowired
@@ -30,11 +32,11 @@ public class UsuarioService {
     }
 
     private boolean pacienteExisteEnBaseDeDatos(String paciente) {
-        Usuario pacienteUsuario = usuarioRepository.findByNombreContainingIgnoreCase(paciente);
+        Optional<Usuario> pacienteUsuario = usuarioRepository.findByNombreContainingIgnoreCase(paciente);
         return pacienteUsuario != null;
     }
 
-    public Usuario encontrarUsuarioPorNombre(String nombre) {
+    public Optional<Usuario> encontrarUsuarioPorNombre(String nombre) {
         return usuarioRepository.findByNombreContainingIgnoreCase(nombre);
     }
 }
