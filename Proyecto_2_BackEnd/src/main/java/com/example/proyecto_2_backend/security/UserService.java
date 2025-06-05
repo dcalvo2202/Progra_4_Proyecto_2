@@ -15,13 +15,13 @@ public class UserService {
     private final RolRepository rolRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Usuario registrarUsuario(String id, String password, String roleName) {
+    public Usuario registrarUsuario(String id, String password, String name) {
         if (usuarioRepository.findById(id).isPresent()) {
             throw new RuntimeException("El usuario ya existe");
         }
 
-        Rol rol = rolRepository.findByName(roleName)
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + roleName));
+        Rol rol = rolRepository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + name));
 
         Usuario usuario = new Usuario();
         usuario.setId(id);

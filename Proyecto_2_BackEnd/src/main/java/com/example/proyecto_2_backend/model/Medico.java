@@ -38,7 +38,7 @@ public class Medico {
 
     @ColumnDefault("'Pendiente'")
     @Lob
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, length = 50)
     private String status;
 
     @OneToMany
