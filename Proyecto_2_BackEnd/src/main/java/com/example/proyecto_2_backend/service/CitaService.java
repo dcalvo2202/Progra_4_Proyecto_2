@@ -4,6 +4,8 @@ import com.example.proyecto_2_backend.model.Medico;
 import com.example.proyecto_2_backend.model.Cita;
 import com.example.proyecto_2_backend.repository.CitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,8 +21,22 @@ public class CitaService {
         this.citaRepository = citaRepository;
     }
 
-    public void agendarCita(Cita cita){
+    public ResponseEntity<String> agendarCita(Cita cita) {
+        // Esto es para validar si ya hay una cita para ese médico en esa fecha y hora
+        boolean yaExiste = citaRepository.existsByMedicoIdAndFechaAndHora(
+                cita.getMedico().getId(),
+                cita.getFecha(),
+                cita.getHora()
+        );
+        // Tira el mensaje de que la cita ya existe
+        if (yaExiste) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Ya existe una cita asignada para ese médico en ese horario.");
+        }
+        // Guarda la cita y tira mensaje de cita registrada
+        cita.setStatus("Pendiente");
         citaRepository.save(cita);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cita registrada exitosamente");
     }
 
     public List<Cita> obtenerCitasPorUsuario(String usuarioId) {

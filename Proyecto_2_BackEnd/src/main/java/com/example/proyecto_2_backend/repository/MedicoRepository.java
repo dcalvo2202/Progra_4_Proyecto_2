@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface MedicoRepository extends CrudRepository<Medico, String> {
     List<Medico> findByEspecialidadContainingIgnoreCaseAndLocalidadContainingIgnoreCase(String especialidad, String localidad);
-    List<Medico> findByStatusContainingIgnoreCase(String status);
+    List<Medico> findByStatus(String status);
     Medico findByUsuarioNombreContainingIgnoreCase(String doctor);
 }

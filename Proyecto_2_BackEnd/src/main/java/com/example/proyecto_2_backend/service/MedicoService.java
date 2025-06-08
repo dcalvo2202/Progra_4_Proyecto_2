@@ -47,7 +47,7 @@ public class MedicoService {
         if (status == null || status.isEmpty()) {
             return (List<Medico>) medicoRepository.findAll();
         }
-        return medicoRepository.findByStatusContainingIgnoreCase(status);
+        return medicoRepository.findByStatus(status);
     }
 
     public void actualizarMedico(Medico medico) {
