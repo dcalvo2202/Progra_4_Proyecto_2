@@ -5,106 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Citas Médicas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div class="container">
-    <!-- Header -->
-    <div class="header">
-        <div class="logo">
-            <i class="fas fa-heartbeat"></i>
-            <h1>Medical Appointments</h1>
-        </div>
-        <div class="nav-links" id="navLinks">
-            <!-- Navigation will be populated by JavaScript -->
-        </div>
-    </div>
+    <!--js de home-->
+    <script src="js/home/home.js"></script>
+    <script src="js/home/confirmar.js"></script>
+    <script src="js/home/gestion.js"></script>
+    <script src="js/home/MiPerfil.js"></script>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Login Page -->
-        <div id="loginPage" class="page active">
-            <div class="login-form">
-                <h2>Iniciar Sesión</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="username">Usuario:</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn">Iniciar Sesión</button>
-                </form>
-                <div id="loginError" class="alert alert-error hidden"></div>
-            </div>
-        </div>
+    <!--js del login-->
+    <script src="js/login/gestion.js"></script>
+    <script src="js/login/login.js"></script>
+    <script src="js/login/notAuthorized.js"></script>
 
-        <!-- Home Page -->
-        <div id="homePage" class="page">
-            <h2>Buscar Médicos</h2>
-            <div class="search-bar">
-                <input type="text" id="searchSpecialty" placeholder="Especialidad">
-                <input type="text" id="searchLocation" placeholder="Localidad">
-                <button onclick="searchDoctors()" class="btn">Buscar</button>
-            </div>
-            <div id="doctorsGrid" class="doctors-grid">
-                <!-- Doctors will be populated by JavaScript -->
-            </div>
-        </div>
+    <!--js about-->
+    <script src="js/about/about.js"></script>
 
-        <!-- Appointments Page -->
-        <div id="appointmentsPage" class="page">
-            <h2>Mis Citas</h2>
-            <div id="appointmentsContent">
-                <!-- Appointments will be populated by JavaScript -->
-            </div>
-        </div>
+    <!--js cita-->
+    <script src="js/cita/agregarNotas.js"></script>
+    <script src="js/cita/historial.js"></script>
+    <script src="js/cita/historialPaciente.js"></script>
+    <script src="js/cita/mostrarNotas.js"></script>
+    <script src="js/cita/schedule.js"></script>
 
-        <!-- Profile Page -->
-        <div id="profilePage" class="page">
-            <h2>Mi Perfil</h2>
-            <div id="profileContent">
-                <!-- Profile will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Admin Page -->
-        <div id="adminPage" class="page">
-            <h2>Gestión de Médicos</h2>
-            <div id="adminContent">
-                <!-- Admin content will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Appointment Booking -->
-<div id="appointmentModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Agendar Cita</h2>
-        <form id="appointmentForm">
-            <div class="form-group">
-                <label for="appointmentDate">Fecha:</label>
-                <input type="date" id="appointmentDate" required>
-            </div>
-            <div class="form-group">
-                <label for="appointmentTime">Hora:</label>
-                <select id="appointmentTime" required>
-                    <option value="">Seleccionar hora</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="appointmentNotes">Notas (opcional):</label>
-                <textarea id="appointmentNotes" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn">Confirmar Cita</button>
-        </form>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <!--js registro-->
+    <script src="js/registro/registro.js"></script>
+    <script src="js/registro/registroExitoso.js"></script>
+    <script src="js/registro/registroMedico.js"></script>
 </body>
 </html>
