@@ -32,7 +32,7 @@ public class UsuarioController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
         try {
-            usuarioService.RegistrarUsuario(usuario);
+            usuarioService.register(usuario);
             return ResponseEntity.ok("Usuario registrado exitosamente");
         } catch (Exception e) {
             return ResponseEntity.badRequest()

@@ -1,4 +1,4 @@
-package com.example.proyecto_2_backend.security;
+/*package com.example.proyecto_2_backend.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,3 +18,4 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }
+*/

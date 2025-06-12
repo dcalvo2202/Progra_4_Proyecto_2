@@ -1,4 +1,4 @@
-package com.example.proyecto_2_backend.security;
+/*package com.example.proyecto_2_backend.security;
 
 import com.example.proyecto_2_backend.model.Usuario;
 import com.example.proyecto_2_backend.model.Rol;
@@ -31,3 +31,4 @@ public class UserService {
         return usuarioRepository.save(usuario);
     }
 }
+*/

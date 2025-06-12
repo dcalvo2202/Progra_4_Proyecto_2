@@ -1,34 +1,32 @@
 package com.example.proyecto_2_backend.controller;
 
-
 import com.example.proyecto_2_backend.DTO.LoginRequest;
 import com.example.proyecto_2_backend.DTO.LoginResponse;
 import com.example.proyecto_2_backend.DTO.RegisterRequest;
 import com.example.proyecto_2_backend.model.Usuario;
-import com.example.proyecto_2_backend.security.UserService;
 import com.example.proyecto_2_backend.service.UsuarioService;
-import com.example.proyecto_2_backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
-    private final UserService userService;
     private final UsuarioService usuarioService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -38,13 +36,18 @@ public class AuthController {
             );
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String token = jwtUtil.generateToken(userDetails);
 
-            // Obtener información adicional del usuario
+            // Establecer la autenticación en el contexto de seguridad
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Guardar información del usuario en la sesión
             Usuario usuario = usuarioService.findUsuarioById(userDetails.getUsername());
+            session.setAttribute("userId", usuario.getId());
+            session.setAttribute("username", usuario.getId());
+            session.setAttribute("nombre", usuario.getNombre());
+            session.setAttribute("roles", userDetails.getAuthorities());
 
             return ResponseEntity.ok(LoginResponse.builder()
-                    .token(token)
                     .userId(usuario.getId())
                     .nombre(usuario.getNombre())
                     .roles(userDetails.getAuthorities().stream()
@@ -61,7 +64,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         try {
-            Usuario usuario = userService.registrarUsuario(
+            // Aquí necesitarás implementar el método registrarUsuario en UsuarioService
+            // que tome username, password y rol como parámetros
+            usuarioService.RegistrarUsuario(
                     registerRequest.getUsername(),
                     registerRequest.getPassword(),
                     registerRequest.getRol()
@@ -75,22 +80,39 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/validate-token")
-    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authHeader) {
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
         try {
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                String token = authHeader.substring(7);
-                String username = jwtUtil.extractUsername(token);
+            // Limpiar el contexto de seguridad
+            SecurityContextHolder.clearContext();
 
-                if (username != null) {
-                    Usuario usuario = usuarioService.findUsuarioById(username);
-                    return ResponseEntity.ok(true);
-                }
-            }
-            return ResponseEntity.ok(false);
+            // Invalidar la sesión
+            session.invalidate();
+
+            return ResponseEntity.ok("Sesión cerrada exitosamente");
         } catch (Exception e) {
-            return ResponseEntity.ok(false);
+            return ResponseEntity.badRequest()
+                    .body("Error al cerrar sesión: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/session-info")
+    public ResponseEntity<?> getSessionInfo(HttpSession session) {
+        try {
+            String userId = (String) session.getAttribute("userId");
+            String nombre = (String) session.getAttribute("nombre");
+
+            if (userId != null) {
+                return ResponseEntity.ok(Map.of(
+                        "userId", userId,
+                        "nombre", nombre != null ? nombre : "",
+                        "authenticated", true
+                ));
+            }
+
+            return ResponseEntity.ok(Map.of("authenticated", false));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("authenticated", false));
         }
     }
 }
-
