@@ -18,7 +18,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<Iterable<Usuario>> obtenerTodosUsuarios() {
         try {
             Iterable<Usuario> usuarios = usuarioService.usuarioFindAll();
@@ -29,7 +29,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
         try {
             usuarioService.register(usuario);

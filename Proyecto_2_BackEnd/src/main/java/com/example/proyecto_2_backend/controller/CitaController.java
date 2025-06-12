@@ -24,7 +24,7 @@ public class CitaController {
     private final MedicoService medicoService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('PACIENTE') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Paciente') or hasAuthority('Administrador')")
     public ResponseEntity<?> agendarCita(@RequestBody Cita cita) {
         try {
             citaService.agendarCita(cita);
@@ -36,7 +36,7 @@ public class CitaController {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    @PreAuthorize("hasAuthority('PACIENTE') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Paciente') or hasAuthority('Administrador')")
     public ResponseEntity<List<Cita>> obtenerCitasPorUsuario(@PathVariable String usuarioId) {
         try {
             List<Cita> citas = citaService.obtenerCitasPorUsuario(usuarioId);
@@ -47,7 +47,7 @@ public class CitaController {
     }
 
     @GetMapping("/medico/{medicoId}")
-    @PreAuthorize("hasAuthority('MEDICO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Medico') or hasAuthority('Administrador')")
     public ResponseEntity<Iterable<Cita>> obtenerCitasPorMedico(@PathVariable String medicoId) {
         try {
             Iterable<Cita> citas = citaService.obtenerCitasPorMedico(medicoId);
@@ -58,7 +58,7 @@ public class CitaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cita> obtenerCitaPorId(@PathVariable String id) {
+    public ResponseEntity<Cita> obtenerCitaPorId(@PathVariable Integer id) {
         try {
             Cita cita = citaService.obtenerCitaPorId(id);
             return ResponseEntity.ok(cita);
@@ -68,7 +68,7 @@ public class CitaController {
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('MEDICO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Medico') or hasAuthority('Administrador')")
     public ResponseEntity<?> actualizarCita(@RequestBody Cita cita) {
         try {
             citaService.actualizarCita(cita);
@@ -93,7 +93,7 @@ public class CitaController {
     }
 
     @GetMapping("/historial-paciente")
-    @PreAuthorize("hasAuthority('PACIENTE') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Paciente') or hasAuthority('Administrador')")
     public ResponseEntity<Iterable<Cita>> filtroHistorialPaciente(
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String medicoId,
@@ -107,7 +107,7 @@ public class CitaController {
     }
 
     @GetMapping("/historial-medico")
-    @PreAuthorize("hasAuthority('MEDICO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Medico') or hasAuthority('Administrador')")
     public ResponseEntity<Iterable<Cita>> filtroHistorialMedico(
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String usuarioId,

@@ -16,7 +16,7 @@ public class RolController {
     private final RolService rolService;
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<Iterable<Rol>> obtenerTodosRoles() {
         try {
             Iterable<Rol> roles = rolService.rolFindAll();
@@ -27,7 +27,7 @@ public class RolController {
     }
 
     @GetMapping("/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<Rol> obtenerRolPorId(@PathVariable Integer id) {
         try {
             Rol rol = rolService.rolFindById(id);

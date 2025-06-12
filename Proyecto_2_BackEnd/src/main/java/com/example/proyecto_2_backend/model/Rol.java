@@ -12,7 +12,7 @@ public class Rol {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "nombre", nullable = false, length = 50)
     private String name;
 
     public Integer getId() {

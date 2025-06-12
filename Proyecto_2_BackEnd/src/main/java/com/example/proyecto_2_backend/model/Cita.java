@@ -33,7 +33,6 @@ public class Cita {
     private LocalTime hora;
 
     @ColumnDefault("'Pendiente'")
-    @Lob
     @Column(name = "status", nullable = false)
     private String status;
 

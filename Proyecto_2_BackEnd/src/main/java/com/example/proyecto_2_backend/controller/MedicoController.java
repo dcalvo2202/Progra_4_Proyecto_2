@@ -20,7 +20,7 @@ public class MedicoController {
     private final MedicoService medicoService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<?> registrarMedico(@RequestBody Medico medico) {
         try {
             medicoService.registrarMedico(medico);
@@ -67,7 +67,7 @@ public class MedicoController {
     }
 
     @GetMapping("/por-status")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<List<Medico>> filtrarMedicosPorStatus(
             @RequestParam(required = false) String status) {
         try {
@@ -79,7 +79,7 @@ public class MedicoController {
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('MEDICO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Medico') or hasAuthority('Administrador')")
     public ResponseEntity<?> actualizarMedico(@RequestBody Medico medico) {
         try {
             medicoService.actualizarMedico(medico);
@@ -91,7 +91,7 @@ public class MedicoController {
     }
 
     @PutMapping("/aceptar/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Administrador')")
     public ResponseEntity<?> aceptarMedico(@PathVariable String id) {
         try {
             medicoService.aceptarMedico(id);
@@ -114,7 +114,7 @@ public class MedicoController {
     }
 
     @PostMapping("/{medicoId}/horarios")
-    @PreAuthorize("hasAuthority('MEDICO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('Medico') or hasAuthority('Administrador')")
     public ResponseEntity<?> agregarHorario(
             @PathVariable String medicoId,
             @RequestBody HorarioRequest horarioRequest) {
@@ -132,13 +132,13 @@ public class MedicoController {
         }
     }
 
-    @DeleteMapping("/{medicoId}/horarios/{dia}")
-    @PreAuthorize("hasAuthority('MEDICO') or hasAuthority('ADMIN')")
+    @DeleteMapping("/{horarioId}/horarios/{dia}")
+    @PreAuthorize("hasAuthority('Medico') or hasAuthority('Administrador')")
     public ResponseEntity<?> eliminarHorario(
-            @PathVariable String medicoId,
+            @PathVariable Integer horarioId,
             @PathVariable String dia) {
         try {
-            medicoService.eliminarHorario(medicoId, dia);
+            medicoService.eliminarHorario(horarioId, dia);
             return ResponseEntity.ok("Horario eliminado exitosamente");
         } catch (Exception e) {
             return ResponseEntity.badRequest()

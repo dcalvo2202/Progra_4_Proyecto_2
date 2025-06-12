@@ -91,7 +91,7 @@ public class MedicoService {
         horarioRepository.save(nuevoHorario);
     }
 
-    public void eliminarHorario(String id, String dia) {
+    public void eliminarHorario(Integer id, String dia) {
         Optional<Horario> horario = horarioRepository.findById(id);
         if (horario.isPresent() && horario.get().getDia().equalsIgnoreCase(dia)) {
             horarioRepository.delete(horario.get());

@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,12 +20,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Usuario usuario = usuarioRepository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(usuario.getRol().getNombre());
+
         return new org.springframework.security.core.userdetails.User(
                 usuario.getId(),
                 usuario.getClave(),
-                usuario.getRol().stream()
-                        .map(rol -> new SimpleGrantedAuthority(rol.getNombre()))
-                        .collect(Collectors.toList())
+                Collections.singleton(authority)
         );
     }
 }

@@ -41,8 +41,8 @@ public class Usuario {
         this.clave = clave;
     }
 
-    public List<Rol> getRol() {
-        return List.of(rol);
+    public Rol getRol() {
+        return rol;
     }
 
     public void setRol(Rol rol) {

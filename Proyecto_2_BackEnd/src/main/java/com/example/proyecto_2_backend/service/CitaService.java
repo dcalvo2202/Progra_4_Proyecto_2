@@ -43,12 +43,12 @@ public class CitaService {
         return citaRepository.findByUsuarioId(usuarioId);
     }
 
-    public Cita obtenerCitaPorId(String id){
+    public Cita obtenerCitaPorId(Integer id){
         return citaRepository.findById(id).get();
     }
 
     public void actualizarCita(Cita cita) {
-        Cita citaExistente = citaRepository.findById(String.valueOf(cita.getId()))
+        Cita citaExistente = citaRepository.findById(cita.getId())
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada con ID: " + cita.getId()));
         citaExistente.setStatus(cita.getStatus());
         citaExistente.setMedico(cita.getMedico());

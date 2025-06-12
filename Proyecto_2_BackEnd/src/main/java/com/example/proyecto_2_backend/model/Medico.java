@@ -37,7 +37,6 @@ public class Medico {
     private Integer frecuenciaCitas;
 
     @ColumnDefault("'Pendiente'")
-    @Lob
     @Column(name = "status", nullable = false, length = 50)
     private String status;
 

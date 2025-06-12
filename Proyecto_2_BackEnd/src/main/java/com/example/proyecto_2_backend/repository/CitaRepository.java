@@ -2,6 +2,7 @@ package com.example.proyecto_2_backend.repository;
 
 import com.example.proyecto_2_backend.model.Cita;
 import com.example.proyecto_2_backend.model.Medico;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public interface CitaRepository extends CrudRepository<Cita, String> {
+public interface CitaRepository extends JpaRepository<Cita, Integer> {
     List<Cita> findByUsuarioId(String usuarioId);
 
     Iterable<Cita> findByStatusContainingAndMedicoUsuarioNombreContainingIgnoreCase(String status, String doctor);
