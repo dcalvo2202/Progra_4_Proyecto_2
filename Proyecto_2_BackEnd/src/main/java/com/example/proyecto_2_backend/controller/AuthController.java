@@ -116,7 +116,6 @@ public class AuthController {
                         .body(Map.of("error", "El usuario ya existe"));
             }
 
-            // CORREGIDO: Buscar rol "Medico" en lugar de "Paciente"
             Rol rol = rolRepository.findByName("Medico")
                     .orElseThrow(() -> new IllegalArgumentException("Rol Medico no existe"));
 
@@ -127,8 +126,11 @@ public class AuthController {
             usuario.setRol(rol);
             usuarioService.register(usuario);
 
+            // Obtener el usuario recién guardado de la BD
+            Usuario usuarioGuardado = usuarioService.findUsuarioById(req.getUsername());
+
             Medico medico = new Medico();
-            medico.setUsuario(usuario);
+            medico.setUsuario(usuarioGuardado);  // <- Usar el usuario de la BD
             medico.setEspecialidad(req.getEspecialidad());
             medico.setCosto(req.getCosto());
             medico.setLocalidad(req.getLocalidad());
