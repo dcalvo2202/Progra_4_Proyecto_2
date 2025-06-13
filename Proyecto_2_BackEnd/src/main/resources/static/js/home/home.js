@@ -1,5 +1,5 @@
 // // API Configuration
-const API_BASE_URL = 'http://localhost:8080'; // Cambia esto por tu URL del backend
+//const API_BASE_URL = 'http://localhost:8080'; // Cambia esto por tu URL del backend
 // let currentUser = null;
 // let authToken = null;
 // let selectedDoctor = null;
@@ -920,122 +920,162 @@ const API_BASE_URL = 'http://localhost:8080'; // Cambia esto por tu URL del back
 //     return timeString.slice(0, 5);
 // }
 
-document.addEventListener("DOMContentLoaded", () => {
-    cargarHeader();
-    cargarFooter();
-    renderFormularioBusqueda();
-    cargarMedicos();
-});
 
-function cargarHeader() {
-    const header = document.createElement("header");
-    header.innerHTML = `
-    <div class="logo">
-      <img src="/images/imagen_Login.png" alt="Medical Appointments">
-      <span>Medical Appointments</span>
-    </div>
-    <div class="contact">
-      <span>📞 +506 5467 0937</span>
-    </div>
-    <nav>
-      <a href="#">About</a>
-      <a href="#">Login</a>
-    </nav>
-  `;
-    document.body.appendChild(header);
-}
+/************************************************************************************/
+// document.addEventListener("DOMContentLoaded", () => {
+//     cargarHeader();
+//     cargarFooter();
+//     renderFormularioBusqueda();
+//     cargarMedicos();
+// });
+//
+// function cargarHeader() {
+//     const header = document.createElement("header");
+//     header.innerHTML = `
+//     <div class="logo">
+//       <img src="/images/imagen_Login.png" alt="Medical Appointments">
+//       <span>Medical Appointments</span>
+//     </div>
+//     <div class="contact">
+//       <span>📞 +506 5467 0937</span>
+//     </div>
+//     <nav>
+//       <a href="#">About</a>
+//       <a href="#">Login</a>
+//     </nav>
+//   `;
+//     document.body.appendChild(header);
+// }
+//
+// function renderFormularioBusqueda() {
+//     const main = document.createElement("main");
+//     main.innerHTML = `
+//     <div class="search-container">
+//       <input type="text" id="especialidad" placeholder="Speciality" class="search-input">
+//       <input type="text" id="localidad" placeholder="City" class="search-input">
+//       <button class="search-btn" onclick="buscarMedicos()">Search</button>
+//     </div>
+//     <div class="medico-list" id="medicoList"></div>
+//   `;
+//     document.body.appendChild(main);
+// }
+//
+// function cargarFooter() {
+//     const footer = document.createElement("footer");
+//     footer.innerHTML = `
+//     <div class="footer-content">
+//       <p>Total Soft Inc.</p>
+//       <p>©2019 Tsf, Inc.</p>
+//       <div class="social-icons">
+//         <img src="/images/image_socials.png" alt="socials">
+//       </div>
+//     </div>
+//   `;
+//     document.body.appendChild(footer);
+// }
+//
+// function buscarMedicos() {
+//     const especialidad = document.getElementById("especialidad").value;
+//     const localidad = document.getElementById("localidad").value;
+//
+//     fetch('/api/medicos/filtrar', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ especialidad, localidad })
+//     })
+//         .then(response => response.json())
+//         .then(medicos => renderMedicos(medicos))
+//         .catch(err => console.error("Error filtrando médicos", err));
+// }
+//
+// function cargarMedicos() {
+//     fetch('/api/medicos/aprobados')
+//         .then(res => res.json())
+//         .then(data => renderMedicos(data))
+//         .catch(err => console.error("Error al cargar médicos", err));
+// }
+//
+// function renderMedicos(medicos) {
+//     const container = document.getElementById("medicoList");
+//     container.innerHTML = "";
+//
+//     medicos.forEach(medico => {
+//         const card = document.createElement("div");
+//         card.className = "medico-card";
+//         card.innerHTML = `
+//       <img src="/usuario/imagen/${medico.id}" alt="medico" class="medico-img">
+//       <div class="medico-info">
+//         <h3>${medico.usuario.nombre}</h3>
+//         <p>${medico.especialidad}</p>
+//         <p>${medico.localidad}</p>
+//         <p>₡${medico.costo}</p>
+//         <div class="appointment-dates" id="disp-${medico.id}"></div>
+//         <div class="button-container">
+//           <a href="/home/${medico.id}/schedule">
+//             <button>Schedule</button>
+//           </a>
+//         </div>
+//       </div>
+//     `;
+//         container.appendChild(card);
+//         cargarDisponibilidad(medico.id);
+//     });
+// }
+//
+// function cargarDisponibilidad(medicoId) {
+//     fetch(`/api/disponibilidad/${medicoId}`)
+//         .then(res => res.json())
+//         .then(fechas => {
+//             const contenedor = document.getElementById(`disp-${medicoId}`);
+//             Object.keys(fechas).forEach(dia => {
+//                 const fecha = new Date(dia).toLocaleDateString("es-CR");
+//                 const div = document.createElement("div");
+//                 div.innerHTML = `
+//           <span class="date">${fecha}</span>
+//           <div class="times">
+//             ${fechas[dia].map(hora => `<button class="time-btn">${hora}</button>`).join('')}
+//           </div>
+//         `;
+//                 contenedor.appendChild(div);
+//             });
+//         })
+//         .catch(err => console.error(`Error cargando disponibilidad de médico ${medicoId}`, err));
+// }
 
-function renderFormularioBusqueda() {
-    const main = document.createElement("main");
-    main.innerHTML = `
-    <div class="search-container">
-      <input type="text" id="especialidad" placeholder="Speciality" class="search-input">
-      <input type="text" id="localidad" placeholder="City" class="search-input">
-      <button class="search-btn" onclick="buscarMedicos()">Search</button>
-    </div>
-    <div class="medico-list" id="medicoList"></div>
-  `;
-    document.body.appendChild(main);
-}
+// /js/home/home.js
+function renderHome(container) {
+    container.innerHTML = `
+    <section class="home">
+      <h1>Bienvenido al Sistema de Citas Médicas</h1>
+      <p>Accede a tu perfil, gestiona tus citas, o consulta información del sistema.</p>
 
-function cargarFooter() {
-    const footer = document.createElement("footer");
-    footer.innerHTML = `
-    <div class="footer-content">
-      <p>Total Soft Inc.</p>
-      <p>©2019 Tsf, Inc.</p>
-      <div class="social-icons">
-        <img src="/images/image_socials.png" alt="socials">
+      <div class="acciones-home">
+        <a href="#perfil" class="boton">Mi Perfil</a>
+        <a href="#gestion" class="boton">Gestión de Citas</a>
+        <a href="#historial" class="boton">Historial Médico</a>
       </div>
-    </div>
+    </section>
   `;
-    document.body.appendChild(footer);
-}
 
-function buscarMedicos() {
-    const especialidad = document.getElementById("especialidad").value;
-    const localidad = document.getElementById("localidad").value;
-
-    fetch('/api/medicos/filtrar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ especialidad, localidad })
-    })
-        .then(response => response.json())
-        .then(medicos => renderMedicos(medicos))
-        .catch(err => console.error("Error filtrando médicos", err));
-}
-
-function cargarMedicos() {
-    fetch('/api/medicos/aprobados')
-        .then(res => res.json())
-        .then(data => renderMedicos(data))
-        .catch(err => console.error("Error al cargar médicos", err));
-}
-
-function renderMedicos(medicos) {
-    const container = document.getElementById("medicoList");
-    container.innerHTML = "";
-
-    medicos.forEach(medico => {
-        const card = document.createElement("div");
-        card.className = "medico-card";
-        card.innerHTML = `
-      <img src="/usuario/imagen/${medico.id}" alt="medico" class="medico-img">
-      <div class="medico-info">
-        <h3>${medico.usuario.nombre}</h3>
-        <p>${medico.especialidad}</p>
-        <p>${medico.localidad}</p>
-        <p>₡${medico.costo}</p>
-        <div class="appointment-dates" id="disp-${medico.id}"></div>
-        <div class="button-container">
-          <a href="/home/${medico.id}/schedule">
-            <button>Schedule</button>
-          </a>
-        </div>
-      </div>
+    // Opcionalmente: proteger el acceso a esta vista
+    const token = localStorage.getItem("token");
+    if (!token) {
+        container.innerHTML = `
+      <section class="home">
+        <h1>Bienvenido</h1>
+        <p>Por favor, inicia sesión para continuar.</p>
+        <a href="#login" class="boton">Ir al Login</a>
+      </section>
     `;
-        container.appendChild(card);
-        cargarDisponibilidad(medico.id);
-    });
+    }
 }
 
-function cargarDisponibilidad(medicoId) {
-    fetch(`/api/disponibilidad/${medicoId}`)
-        .then(res => res.json())
-        .then(fechas => {
-            const contenedor = document.getElementById(`disp-${medicoId}`);
-            Object.keys(fechas).forEach(dia => {
-                const fecha = new Date(dia).toLocaleDateString("es-CR");
-                const div = document.createElement("div");
-                div.innerHTML = `
-          <span class="date">${fecha}</span>
-          <div class="times">
-            ${fechas[dia].map(hora => `<button class="time-btn">${hora}</button>`).join('')}
-          </div>
-        `;
-                contenedor.appendChild(div);
-            });
-        })
-        .catch(err => console.error(`Error cargando disponibilidad de médico ${medicoId}`, err));
-}
+/*
+Este componente SPA:
+
+Muestra una vista de bienvenida al sistema.
+
+Ofrece enlaces a otras secciones (#perfil, #gestion, #historial).
+
+Verifica si el usuario ha iniciado sesión revisando el token.
+*/

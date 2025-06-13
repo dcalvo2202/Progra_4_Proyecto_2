@@ -1,66 +1,64 @@
-// registro.js - SPA view for user registration
-export function renderRegistroPage(roles = []) {
-    const container = document.createElement('div');
-    container.className = 'register-container';
 
+// /js/registro/registro.js
+function renderRegistro(container) {
     container.innerHTML = `
-    <form id="registro-form" enctype="multipart/form-data">
-      <div class="register-box">
-        <h2>Registro</h2>
-        <img src="/images/user.png" alt="User Icon">
-
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" name="id" placeholder="User id" required>
+    <section class="registro-paciente">
+      <h2>Registro de Paciente</h2>
+      <form id="formRegistro">
+        <div>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required />
         </div>
-
-        <div class="input-group">
-          <i class="fas fa-key"></i>
-          <input type="password" name="clave" placeholder="User password" required>
+        <div>
+          <label for="username">Correo electrónico:</label>
+          <input type="email" id="username" name="username" required />
         </div>
-
-        <div class="input-group">
-          <i class="fas fa-id-card"></i>
-          <input type="text" name="nombre" placeholder="Name" required pattern="[A-Za-z\s]+" title="Números no Aceptados">
+        <div>
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required />
         </div>
-
-        <div class="input-group">
-          <i class="fas fa-user-tag"></i>
-          <select id="rol" name="rol" required></select>
-        </div>
-
-        <div class="input-group">
-          <i class="fas fa-camera"></i>
-          <input type="file" name="imagen" id="imagen" accept="image/jpeg, image/png">
-        </div>
-
-        <button type="submit" class="registrarse-btn">Registrarse</button>
-      </div>
-    </form>
+        <button type="submit">Registrarse</button>
+      </form>
+      <div id="mensajeRegistro" class="mensaje"></div>
+    </section>
   `;
 
-    const select = container.querySelector('#rol');
-    roles.filter(r => r.id !== 3).forEach(rol => {
-        const option = document.createElement('option');
-        option.value = rol.id;
-        option.textContent = rol.nombre;
-        select.appendChild(option);
-    });
-
-    container.querySelector('#registro-form').addEventListener('submit', async e => {
+    document.getElementById("formRegistro").addEventListener("submit", function (e) {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const res = await fetch('/api/register/guardar', {
-            method: 'POST',
-            body: formData
-        });
 
-        if (res.ok) {
-            window.router.navigate('/registro/exitoso');
-        } else {
-            alert('Error al registrarse');
-        }
+        const datosRegistro = {
+            nombre: document.getElementById("nombre").value,
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value
+        };
+
+        fetch("/api/auth/registro", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datosRegistro)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("No se pudo registrar el usuario.");
+                }
+                return response.text();
+            })
+            .then(msg => {
+                location.hash = "registroExitoso";
+            })
+            .catch(error => {
+                document.getElementById("mensajeRegistro").textContent = error.message;
+            });
     });
-
-    return container;
 }
+
+
+/*
+Este componente SPA:
+
+Permite registrar pacientes con nombre, correo y contraseña.
+
+Llama a POST /api/auth/registro.
+
+Redirige a #registroExitoso si el registro fue exitoso.
+*/
